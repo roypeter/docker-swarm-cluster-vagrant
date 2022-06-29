@@ -1,4 +1,4 @@
-# Docker swarm mode cluster setup using vagrant/virtualbox
+# Docker swarm mode cluster setup using Vagrant/Virtualbox
 
 ## Cluster up
 - Install vagrant and virtual box: [link](https://www.vagrantup.com/downloads)
