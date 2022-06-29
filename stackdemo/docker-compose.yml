@@ -19,6 +19,10 @@ services:
     secrets:
       - certificate.pem
       - key.pem
+  metabase:
+    image: metabase/metabase:latest
+    deploy:
+      replicas: 3
 secrets:
   certificate.pem:
     file: ./certificate.pem
