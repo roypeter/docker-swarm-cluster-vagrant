@@ -1,18 +1,26 @@
-version: "3"
+version: "3.9"
 
 services:
   web:
     image: 127.0.0.1:5000/stackdemo
     build: .
-    ports:
-      - "8000:8000"
+    deploy:
+      replicas: 3
   redis:
     image: redis:alpine
   ngnix-server:
     image: nginx:1.23
     ports: 
-      - "8080:80"
+      - "443:443"
     volumes: 
       - './ngnix.conf:/etc/nginx/nginx.conf'
     depends_on: 
       - web
+    secrets:
+      - certificate.pem
+      - key.pem
+secrets:
+  certificate.pem:
+    file: ./certificate.pem
+  key.pem:
+    file: ./key.pem

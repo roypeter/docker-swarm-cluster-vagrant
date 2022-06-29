@@ -10,3 +10,8 @@
 
 ## Stack demo
 https://docs.docker.com/engine/swarm/stack-deploy/
+
+## Ansible vault token
+```
+o8dniqo3z6n6f51tkkda04s6n
+```
