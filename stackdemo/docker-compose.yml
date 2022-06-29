@@ -8,6 +8,9 @@ services:
       replicas: 3
   redis:
     image: redis:alpine
+    deploy:
+      placement:
+        constraints: [node.hostname == node-02]
   ngnix-server:
     image: nginx:1.23
     ports: 
@@ -22,7 +25,7 @@ services:
   metabase:
     image: metabase/metabase:latest
     deploy:
-      replicas: 3
+      replicas: 1
 secrets:
   certificate.pem:
     file: ./certificate.pem
