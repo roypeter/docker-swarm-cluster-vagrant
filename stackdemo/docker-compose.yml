@@ -8,3 +8,11 @@ services:
       - "8000:8000"
   redis:
     image: redis:alpine
+  ngnix-server:
+    image: nginx:1.23
+    ports: 
+      - "8080:80"
+    volumes: 
+      - './ngnix.conf:/etc/nginx/nginx.conf'
+    depends_on: 
+      - web

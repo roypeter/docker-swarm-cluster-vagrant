@@ -7,3 +7,6 @@
 - SSH to node-01: `vagrant ssh node-01`
 - Check cluster status: `sudo docker node ls`
 - Explore service deployment etc: [link](https://docs.docker.com/engine/swarm/swarm-tutorial/deploy-service/)
+
+## Stack demo
+https://docs.docker.com/engine/swarm/stack-deploy/
