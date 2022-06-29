@@ -12,22 +12,33 @@ Vagrant.configure("2") do |config|
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose -y
+    sudo groupadd docker
+    sudo gpasswd -a $USER docker
   SHELL
 
   config.vm.define 'node-01' do |node|
     node.vm.box = box
     node.vm.network "private_network", ip: "10.10.8.10"
     node.vm.hostname = "node-01"
+    node.vm.provision "shell", inline: <<-SHELL
+      docker swarm init --advertise-addr 10.10.8.10 | grep "docker swarm join --token"  > /vagrant/token.txt
+    SHELL
   end
   config.vm.define 'node-02' do |node|
     node.vm.box = box
     node.vm.network "private_network", ip: "10.10.8.11"
     node.vm.hostname = "node-02"
+    node.vm.provision "shell", inline: <<-SHELL
+      bash /vagrant/token.txt
+    SHELL
   end
   config.vm.define 'node-03' do |node|
     node.vm.box = box
     node.vm.network "private_network", ip: "10.10.8.12"
     node.vm.hostname = "node-03"
+    node.vm.provision "shell", inline: <<-SHELL
+      bash /vagrant/token.txt
+    SHELL
   end
 end
