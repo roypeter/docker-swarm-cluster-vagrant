@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose -y
     sudo groupadd docker
-    sudo gpasswd -a $USER docker
+    sudo gpasswd -a vagrant docker
   SHELL
 
   config.vm.define 'node-01' do |node|
