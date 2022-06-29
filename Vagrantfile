@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
     node.vm.hostname = "node-01"
     node.vm.provision "shell", inline: <<-SHELL
       docker swarm init --advertise-addr 10.10.8.10 | grep "docker swarm join --token"  > /vagrant/token.txt
+      docker service create --name registry --publish published=5000,target=5000 registry:2
     SHELL
   end
   config.vm.define 'node-02' do |node|
