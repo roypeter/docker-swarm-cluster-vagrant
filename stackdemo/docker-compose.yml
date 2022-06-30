@@ -6,13 +6,37 @@ services:
     build: .
     deploy:
       replicas: 3
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.50'
+          memory: 50M
   redis:
     image: redis:alpine
     deploy:
       placement:
         constraints: [node.hostname == node-02]
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.50'
+          memory: 50M
+    volumes:
+      - redis_data:/var/lib/redis/data
   ngnix-server:
     image: nginx:1.23
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.50'
+          memory: 50M
     ports: 
       - "443:443"
     volumes: 
@@ -26,11 +50,25 @@ services:
     image: metabase/metabase:latest
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 250M
+        reservations:
+          cpus: '0.50'
+          memory: 250M
   postgresql-master:
     image: docker.io/bitnami/postgresql:14
     deploy:
       placement:
         constraints: [node.hostname == node-02]
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 250M
+        reservations:
+          cpus: '0.50'
+          memory: 250M
     ports:
       - '5432'
     volumes:
@@ -42,6 +80,13 @@ services:
     deploy:
       placement:
         constraints: [node.hostname == node-03]
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 250M
+        reservations:
+          cpus: '0.50'
+          memory: 250M
     ports:
       - '5432'
     depends_on:
@@ -55,4 +100,6 @@ secrets:
     file: ./key.pem
 volumes:
   postgresql_master_data:
+    driver: local
+  redis_data:
     driver: local
