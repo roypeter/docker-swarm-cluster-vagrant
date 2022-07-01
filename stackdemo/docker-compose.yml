@@ -26,7 +26,7 @@ services:
           cpus: '0.50'
           memory: 50M
     volumes:
-      - redis_data:/var/lib/redis/data
+      - redis_data:/data
   ngnix-server:
     image: nginx:1.23
     deploy:
@@ -50,13 +50,6 @@ services:
     image: metabase/metabase:latest
     deploy:
       replicas: 1
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 250M
-        reservations:
-          cpus: '0.50'
-          memory: 250M
   postgresql-master:
     image: docker.io/bitnami/postgresql:14
     deploy:
